@@ -1,16 +1,12 @@
 #include "board.h"
 
-using namespace std;
-
 Cell_chose::Cell_chose(int size) :
-    n(size),
     gen(std::random_device{}()),   
     dist(0, size * size - 1)         
 {}
 
 int Cell_chose:: operator() () {
    return dist(gen); 
-
 }
 
 int Board::one_experiment(Cell_chose& random) {
@@ -20,13 +16,11 @@ int Board::one_experiment(Cell_chose& random) {
         int random_index = random();
         mark_cell(random_index);
     }
-
     return free_zone_size();
 }
 
 Board::Board(int user_n, int user_m) :
-    n(user_n), m(user_m) {
-};
+    n(user_n), m(user_m) {};
 
 void Board::build() {
     cells.clear();
@@ -37,68 +31,61 @@ void Board::build() {
     }
 }
 
-void Board::mark_cell(int index) {
-    if (index < 0 || index >= n * n) 
-        return; 
-
-    cells[index].isMarked = true; 
-    int size = n * n; 
-
-    if (index - n >= 0) {
+void Board::mark_neighbours(int index)
+{
+    if (index - n >= 0)     // top
         cells[index - n].isNeighbour = true;
-    }
-     
-    if (index + n < size) {
+
+    if (index + n < n * n)  // bottom
         cells[index + n].isNeighbour = true;
-    }
-   
-    if (index % n != 0) {
+
+    if (index % n != 0)     // left
         cells[index - 1].isNeighbour = true;
-    }
-   
-    if (index % n != n - 1) {
+
+    if (index % n != n - 1) // right
         cells[index + 1].isNeighbour = true;
+}
+
+void Board::mark_cell(int index)
+{
+    if (!cells[index].isMarked)
+    {
+        cells[index].isMarked = true;
+        mark_neighbours(index);
     }
 }
 
 int Board::free_zone_size() {
     int count = 0;
-    for (const auto& cell : cells) {
-        if (!cell.isMarked && !cell.isNeighbour) {
+    for (const auto& cell : cells)
+        if (!cell.isMarked && !cell.isNeighbour)
             count++;
-        }
-    }
     return count;
 }
 
-double Board::average_free_zone() {
-    int num_experiment = 1000;
+double Board::average_free_zone(int num_experiment) {
     double sum = 0.0;
     Cell_chose random(n);
 
-    for (int i = 0; i < num_experiment; i++) {
+    for (int i = 0; i < num_experiment; i++)
         sum += one_experiment(random);
-    }
-
     return sum / num_experiment;
 }
 
-double Board::median_free_zone() {
-    int num_experiment = 1000;
-    vector<int> results;
+double Board::median_free_zone(int num_experiment) {
+    std::vector<int> results;
     results.reserve(num_experiment);
     Cell_chose random(n);
 
-    for (int i = 0; i < num_experiment; i++) {
+    for (int i = 0; i < num_experiment; i++)
         results.push_back(one_experiment(random));
-    }
 
-    sort(results.begin(), results.end());
+    std::sort(results.begin(), results.end());
 
-    if (num_experiment % 2 == 1) {
+    if (num_experiment % 2 == 1) 
         return results[num_experiment / 2];
-    }
-    else {
+    else 
+    {
         int mid1 = results[num_experiment / 2 - 1];
         int mid2 = results[num_experiment / 2];
         return (mid1 + mid2) / 2.0;

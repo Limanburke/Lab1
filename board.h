@@ -1,16 +1,11 @@
 #pragma once
-
-using namespace std;
-
 #include <vector>
 #include <random>
-#include <algorithm>
 
 class Cell_chose {
 private:
-    int n;
-    mt19937 gen;
-    uniform_int_distribution<> dist;
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dist;
 public:
     Cell_chose(int size);
     int operator() ();
@@ -25,7 +20,7 @@ class Board
         bool isMarked = false;
         bool isNeighbour = false; 
     };
-    vector<Cell> cells; 
+    std::vector<Cell> cells;
 
     int one_experiment(Cell_chose& random);
 public:
@@ -33,8 +28,8 @@ public:
 
     void build(); 
     void mark_cell(int index);
+    void mark_neighbours(int index);
     int free_zone_size(); 
-    double average_free_zone(); 
-    double median_free_zone(); 
-
+    double average_free_zone(int num_experiment = 1000);
+    double median_free_zone(int num_experiment = 1000);
 };
