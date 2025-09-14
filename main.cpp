@@ -34,7 +34,7 @@ int user_input()
                 std::cout << "Enter the amount of random cells: ";
                 m = user_input();
                 if (m < 0 || m > n * n)
-                    throw std::out_of_range("Amount of random cell can't be less then zero or be greater/equal size");
+                    throw std::out_of_range("Amount of random cell can't be less then zero or be greater then size");
 
                 std::cout << "Enter number of experiments to run: ";
                 num_experiment = user_input();
