@@ -33,7 +33,7 @@ int user_input()
 
                 std::cout << "Enter the amount of random cells: ";
                 m = user_input();
-                if (m < 0 || m >= n * n)
+                if (m < 0 || m > n * n)
                     throw std::out_of_range("Amount of random cell can't be less then zero or be greater/equal size");
 
                 std::cout << "Enter number of experiments to run: ";
@@ -57,6 +57,7 @@ int user_input()
         } while (n <= 0 || m < 0 || m > n * n || num_experiment <= 0);
 
     Board board(n, m);
+    board.generate_random_numbers(num_experiment);
     double average = board.average_free_zone(num_experiment);
     std::cout << "Average amount of free cells: " << average << std::endl;
     double median = board.median_free_zone(num_experiment);

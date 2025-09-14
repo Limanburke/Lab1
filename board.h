@@ -21,8 +21,8 @@ class Board
         bool isNeighbour = false; 
     };
     std::vector<Cell> cells;
-
-    int one_experiment(Cell_chose& random);
+    std::vector<int> random_numbers;
+    int one_experiment(int start_index, int end_index);
 public:
     Board(int user_n, int user_m);
 
@@ -30,6 +30,7 @@ public:
     void mark_cell(int index);
     void mark_neighbours(int index);
     int free_zone_size(); 
+    void generate_random_numbers(int num_experiment);
     double average_free_zone(int num_experiment = 1000);
     double median_free_zone(int num_experiment = 1000);
 };
