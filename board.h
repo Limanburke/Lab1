@@ -32,6 +32,6 @@ public:
     void mark_neighbours(int index);
     int free_zone_size();
     void generate_random_numbers(int num_experiment);
-    double average_free_zone(int num_experiment = 1000);
-    double median_free_zone(int num_experiment = 1000);
+    double average_free_zone(int num_experiment);
+    double median_free_zone(int num_experiment);
 };
