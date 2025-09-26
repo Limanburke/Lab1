@@ -1,12 +1,12 @@
 #include "board.h"
 
-Cell_chose::Cell_chose(int size) :
+Cell_chose::Cell_chose(int size)
     gen(std::random_device{}());
     dist(0, size* size - 1);
 {
 }
 
-int Cell_chose:: operator() ()
+int Cell_chose:: operator() ()   
 {
     return dist(gen);
 }
@@ -32,6 +32,7 @@ std::vector<double> Board::run_experiments(int num_experiment)
     for (int i = 0; i < num_experiment; i++)
     {
         for (auto& cell : cells)
+
         {
             cell.isMarked = false;
             cell.isNeighbour = false;
@@ -50,8 +51,8 @@ std::vector<double> Board::run_experiments(int num_experiment)
 }
 
 Board::Board(int user_n, int user_m) :
-    n(user_n), m(user_m) {
-};
+    n(user_n), m(user_m) {};
+
 
 int Board::size() const {
     return n;
@@ -122,7 +123,6 @@ double Experiment::average_free_zone(Board& board, std::vector<double> result)
 
 double Experiment::median_free_zone(Board& board, std::vector<double> result)
 {
-
     std::sort(result.begin(), result.end());
 
     if (result.size() % 2 == 1)
