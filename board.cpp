@@ -112,7 +112,7 @@ int Board::free_zone_size()
     return count;
 }
 
-double Experiment::average_free_zone(std::vector<double> result)
+double Experiment::average_free_zone(const std::vector<double>& result)
 {
     double sum = 0.0;
     for (double el : result)
