@@ -1,15 +1,15 @@
-#include <iostream>
-#include "board.h"
-
 // Compiler: MSVC 19.34 (Visual Studio 2022 v17.4)
 // Standard : C++20
 
+#include <iostream>
+#include "board.h"
+
 int user_input()
 {
-    int number = 0;
+    int number;
     std::cin >> number;
 
-    if (std::cin.fail())
+    if (std::cin.fail() || std::cin.peek() != '\n')
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -17,7 +17,6 @@ int user_input()
     }
 
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
     return number;
 }
 
@@ -34,27 +33,25 @@ int main()
             std::cout << "Enter the size of the board: ";
             n = user_input();
             if (n < 1)
-                throw std::out_of_range("\nSize of board can't be less then one!\n");
+                throw std::out_of_range("\nSize of board can't be less than one!\n");
 
             std::cout << "Enter the amount of random cells: ";
             m = user_input();
             if (m < 0 || m > n * n)
                 throw std::out_of_range("\nAmount of random cell can't be less then zero or be greater then size of the board!\n");
+
             std::cout << "Enter number of experiments to run: ";
             num_experiment = user_input();
             if (num_experiment <= 0)
                 throw std::out_of_range("\nNumber of experiments to run must be positive!\n");
         }
-
         catch (std::out_of_range& e)
         {
             std::cout << e.what() << '\n';
             n = 0;
             m = 0;
         }
-
         catch (std::invalid_argument& i)
-
         {
             std::cout << i.what() << '\n';
             n = 0;
@@ -64,17 +61,17 @@ int main()
 
     Board board(n, m);
 
-    Experiment::generate_random_numbers(board, num_experiment);
+    Cell_chose chooser(n);
+    chooser.generate_random_numbers(m, num_experiment);
 
     std::cout << "\nResult:\n";
 
-    auto result = board.run_experiments(num_experiment);
+    auto result = board.run_experiments(num_experiment, chooser);
 
-    double average = Experiment::average_free_zone(board, result);
+    double average = Experiment::average_free_zone(result);
     std::cout << "Average amount of free cells: " << average << std::endl;
 
-    double median = Experiment::median_free_zone(board, result);
-
+    double median = Experiment::median_free_zone(result);
     std::cout << "Median number of free cells: " << median << std::endl;
 
     return 0;
