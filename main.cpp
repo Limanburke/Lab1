@@ -1,15 +1,15 @@
-#include <iostream>
-#include "board.h"
-
 // Compiler: MSVC 19.34 (Visual Studio 2022 v17.4)
 // Standard : C++20
 
+#include <iostream>
+#include "board.h"
+
 int user_input()
 {
-    int number = 0;
+    int number;
     std::cin >> number;
 
-    if (std::cin.fail())
+    if (std::cin.fail() || std::cin.peek() != '\n')
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -17,7 +17,6 @@ int user_input()
     }
 
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
     return number;
 }
 
