@@ -21,9 +21,21 @@
     <ClCompile Include="board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cell_chose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="experiment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell_chose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="experiment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
