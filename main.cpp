@@ -63,7 +63,7 @@ int main()
 
     Board board(n, m);
 
-    Cell_chose chooser(n);
+    Cell_selection chooser(n);
     chooser.generate_random_numbers(m, num_experiment);
 
     std::cout << "\nResult:\n";
