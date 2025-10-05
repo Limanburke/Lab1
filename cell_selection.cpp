@@ -1,17 +1,17 @@
-#include "cell_chose.h"
+#include "cell_selection.h"
 
-Cell_chose::Cell_chose(int size) :
+Cell_selection::Cell_selection(int size) :
     gen(std::random_device{}()),
     dist(0, size* size - 1)
 {
 }
 
-int Cell_chose:: operator() ()
+int Cell_selection:: operator() ()
 {
     return dist(gen);
 }
 
-void Cell_chose::generate_random_numbers(int marks, int num_experiment)
+void Cell_selection::generate_random_numbers(int marks, int num_experiment)
 {
     random_numbers.reserve(num_experiment * marks);
 
@@ -19,7 +19,7 @@ void Cell_chose::generate_random_numbers(int marks, int num_experiment)
         random_numbers.push_back((*this)());
 }
 
-std::vector<int>& Cell_chose::get_random_numbers()
+std::vector<int>& Cell_selection::get_random_numbers()
 {
     return random_numbers;
 }
