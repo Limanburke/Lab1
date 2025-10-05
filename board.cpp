@@ -1,7 +1,7 @@
 #include "board.h"
 #include "cell_selection.h"
 
-std::vector<double> Board::run_experiments(int num_experiment, Cell_chose& chooser)
+std::vector<double> Board::run_experiments(int num_experiment, Cell_selection& chooser)
 {
     std::vector<double> results;
     results.reserve(num_experiment);
