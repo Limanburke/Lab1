@@ -4,7 +4,7 @@
 #include <iostream>
 #include "board.h"
 #include "experiment.h"
-#include "cell_chose.h"
+#include "cell_selection.h"
 
 int user_input()
 {
