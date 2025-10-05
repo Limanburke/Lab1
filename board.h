@@ -24,5 +24,5 @@ public:
     Board(int user_n, int user_m);
     int size() const;
     int marks() const;
-    std::vector<double> run_experiments(int num_experiment, Cell_chose& chooser);
+    std::vector<double> run_experiments(int num_experiment, Cell_selection& chooser);
 };
