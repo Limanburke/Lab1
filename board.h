@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class Cell_chose;
+class Cell_selection;
 
 class Board
 {
