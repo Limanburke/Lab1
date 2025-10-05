@@ -1,27 +1,7 @@
 #include "board.h"
+#include "cell_chose.h"
 
-Cell_chose::Cell_chose(int size)
-    gen(std::random_device{}());
-    dist(0, size* size - 1);
-{
-}
-
-int Cell_chose:: operator() ()   
-{
-    return dist(gen);
-}
-
-void Experiment::generate_random_numbers(Board& board, int num_experiment)
-{
-    Cell_chose random(board.size());
-    auto& random_numbers = board.get_random_numbers();
-    random_numbers.reserve(num_experiment * board.marks());
-
-    for (int i = 0; i < num_experiment * board.marks(); i++)
-        random_numbers.push_back(random());
-}
-
-std::vector<double> Board::run_experiments(int num_experiment)
+std::vector<double> Board::run_experiments(int num_experiment, Cell_chose& chooser)
 {
     std::vector<double> results;
     results.reserve(num_experiment);
@@ -29,10 +9,11 @@ std::vector<double> Board::run_experiments(int num_experiment)
     if (cells.empty())
         build();
 
+    auto& random_numbers = chooser.get_random_numbers();
+
     for (int i = 0; i < num_experiment; i++)
     {
         for (auto& cell : cells)
-
         {
             cell.isMarked = false;
             cell.isNeighbour = false;
@@ -51,8 +32,8 @@ std::vector<double> Board::run_experiments(int num_experiment)
 }
 
 Board::Board(int user_n, int user_m) :
-    n(user_n), m(user_m) {};
-
+    n(user_n), m(user_m) {
+};
 
 int Board::size() const {
     return n;
@@ -62,9 +43,6 @@ int Board::marks() const {
     return m;
 }
 
-std::vector<int>& Board::get_random_numbers() {
-    return random_numbers;
-}
 
 void Board::build()
 {
@@ -110,27 +88,4 @@ int Board::free_zone_size()
             count++;
 
     return count;
-}
-
-double Experiment::average_free_zone(Board& board, std::vector<double> result)
-{
-    double sum = 0.0;
-    for (double el : result)
-        sum += el;
-
-    return sum / result.size();
-}
-
-double Experiment::median_free_zone(Board& board, std::vector<double> result)
-{
-    std::sort(result.begin(), result.end());
-
-    if (result.size() % 2 == 1)
-        return result[result.size() / 2];
-    else
-    {
-        double mid1 = result[result.size() / 2 - 1];
-        double mid2 = result[result.size() / 2];
-        return (mid1 + mid2) / 2.0;
-    }
 }
